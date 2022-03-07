@@ -23,12 +23,13 @@ while True:
         message = connectionSocket.recv(1024).decode()#Fill in start #Fill in end
         filename = message.split()[1]
         f = open(str(filename[1:]))
-        outputdata = f#Fill in start #Fill in end
+        outputdata = f.read(1024)#Fill in start #Fill in end
         #Send one HTTP header line into socket
-        print(outputdata)
+
+        # print(outputdata)
         #Fill in start
-
-
+        header = "HTTP/1.x 200 OK"
+        outputdata = header + outputdata
         #Fill in end
         #Send the content of the requested file to the client
         for i in range(0, len(outputdata)):
@@ -39,17 +40,14 @@ while True:
         print("[D] somthing went wrong...")
         #Send response message for file not found
         #Fill in start
-        header = "POST "
-        errormessage ="<html><body><header><h1>404 Not Found</h1></header></body></html>"
-        errormessage = errormessage
-        for i in range(0, len(errormessage)):
-            connectionSocket.send(errormessage[i].encode())
-        connectionSocket.send("\r\n".encode())
+        header = "HTTP/1.x 404 NOT FOUND"
+        connectionSocket.send(header.encode())
+
         #Fill in end
         #Close client socket
         #Fill in start
         connectionSocket.close()
         #Fill in end
-    serverSocket.close()
+serverSocket.close()
 sys.exit()#Terminate the program after sending the corresponding dat
 
