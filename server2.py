@@ -6,16 +6,21 @@
 from socket import *
 from _thread import *
 import threading
+import time # used for testing
 import sys  # In order to terminate the program
+
 
 filelock = threading.Lock()
 tnum = 0
 
 
-def threadjob(connection, addr, thread):
+def threadjob(connection, thread):
     try:
         # print("[D] i got in to try...")
-        print("[+]trying to send hello %d...." % thread)
+
+        print("[+]trying to send hello %d...." % thread )
+        #time.sleep(10)
+
         message = connection.recv(1024).decode()  # Fill in start #Fill in end
         filename = message.split()[1]
         f = open(str(filename[1:]))
@@ -72,7 +77,7 @@ while True:
     filelock.acquire()
     print("[+]connection established....")
     tnum += 1
-    start_new_thread(threadjob, (connectionSocket, addr, tnum))
+    start_new_thread(threadjob, (connectionSocket, tnum))
     tnum -=1
 
 serverSocket.close()
