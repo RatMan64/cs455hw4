@@ -78,7 +78,7 @@ while True:
     print("[+]connection established....")
     tnum += 1
     start_new_thread(threadjob, (connectionSocket, tnum))
-    tnum -=1
+
 
 serverSocket.close()
 sys.exit()  # Terminate the program after sending the corresponding dat
